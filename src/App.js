@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Home from "./pages/home";
+import Menu from "./pages/menu";
+
+const MENU_LIST = [
+  { id: 'videoList', title: 'Lista de Videos' },
+  { id: 'newVideo', title: 'Novo Video' },
+]
 
 function App() {
+  const [menuId, setMenuId] = useState(MENU_LIST[1].id);
+
+  const handlerMenuSelect = (evnt) => {
+    setMenuId(evnt.target.id);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Menu list={MENU_LIST} clickMenu={handlerMenuSelect} />
+      {
+        menuId === 'videoList'
+          ? <Home />
+          : <h1>Pagina de cadastro</h1>
+      }
     </div>
-  );
+  )
 }
 
 export default App;
