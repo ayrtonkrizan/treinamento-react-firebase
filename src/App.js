@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Home from "./pages/home";
 import Menu from "./pages/menu";
+import Form from "./pages/form";
 
 const MENU_LIST = [
   { id: 'videoList', title: 'Lista de Videos' },
@@ -19,7 +20,7 @@ function App() {
       {
         menuId === 'videoList'
           ? <Home />
-          : <h1>Pagina de cadastro</h1>
+          : <Form />
       }
     </div>
   )

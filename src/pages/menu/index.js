@@ -1,7 +1,7 @@
 import React from "react";
 import './style.css';
 
-export default ({ list = [], clickMenu }) => {
+const Component = ({ list = [], clickMenu }) => {
     return (
         <ul className="sidebar">
             <img alt="Logo" src="/images/logo-gato.png" />
@@ -11,3 +11,5 @@ export default ({ list = [], clickMenu }) => {
         </ul>
     )
 }
+
+export default Component
