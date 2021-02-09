@@ -1,8 +1,3 @@
-
-.home_title {
-    color: red;
-}
-
 .home_container {
     background-color: var(--background-color);
     height: 100vh;
@@ -12,7 +7,7 @@
 }
 
 .home_card {
-    background-color: white;
+    background-color: var(--paper-color);
     width: 350px;
     height: 400px;
     margin: 8px;
@@ -45,8 +40,6 @@
     font-weight: 250;
     font-style: italic;
 }
-
-
 
 .avatar {
     border-radius: 50%;

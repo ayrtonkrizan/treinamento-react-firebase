@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import './style.css'
+import api from "../../services/api";
+
+console.log(api)
 
 const DEFAULT_VALUES = {
     title: '',
@@ -23,6 +26,8 @@ const Component = () => {
     const handlerSubmit = evnt => {
         evnt.preventDefault();
         console.log('to submitando', values);
+        api.addVideo({ ...values, date: new Date(`${values.date} `) });
+        alert('cadastrado com sucesso!');
     }
     return (
         <div className="form_container">
