@@ -28,17 +28,21 @@ api.addVideo = async (values = {}) => {
     const id = generateId(20);
     const list = getLocalStorage(TABLES.videoList, []);
     let newObj = { ...values, id };
-    console.log(list.concat(newObj));
     setLocalStorage(TABLES.videoList, list.concat(newObj));
 }
 
 api.getVideoList = async () => {
     let list = getLocalStorage(TABLES.videoList, []);
-    console.log(list);
-    return list.map(l => ({ 
-        ...l, 
+    return list.map(l => ({
+        ...l,
         date: new Date(l.date),
     }));
+}
+
+api.deleteVideo = async id => {
+    const list = getLocalStorage(TABLES.videoList, []);
+    setLocalStorage(TABLES.videoList, list.filter(l => l.id !== id))
+    return true;
 }
 
 export default api;
