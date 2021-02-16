@@ -29,12 +29,30 @@ const Component = () => {
 
 
 const Card = ({ title, imageUrl, id, userAvatar, date, description, handlerDelete }) => {
-
+    const [avatarUrl, setAvatarUrl] = useState('/images/avatar_placeholder.png');
+    
+    useEffect(() => {
+        if (userAvatar) {
+            let img = new Image();
+            img.onload = evnt => {
+                setAvatarUrl(userAvatar);
+            }
+            img.onerror = evnt => {
+                setAvatarUrl('/images/avatar_placeholder.png');
+            }
+            
+            
+            img.src = userAvatar;
+        }
+        else
+            setAvatarUrl('/images/avatar_placeholder.png');
+            
+    }, [userAvatar]);
     return (
         <div className="home_card">
             <img src={imageUrl} alt="imagem" />
             <div className="title_container">
-                <img className="avatar" src={userAvatar} alt="avatar" />
+                <img className="avatar" src={avatarUrl} alt="avatar" />
                 <div className="title_box">
                     <h1>{title}</h1>
                     <h2>Publicado em {date.toLocaleDateString('pt-br')}</h2>

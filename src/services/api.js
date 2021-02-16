@@ -1,3 +1,5 @@
+import { db } from "../firebase";
+
 const api = {}
 
 const TABLES = {
@@ -15,33 +17,28 @@ const generateId = length => {
     return result;
 }
 
-const getLocalStorage = (name, def) => {
-    const storage = localStorage.getItem(name);
-    if (!storage)
-        return def;
-    return JSON.parse(storage);
-}
-
-const setLocalStorage = (name, obj) => localStorage.setItem(name, JSON.stringify(obj));
-
 api.addVideo = async (values = {}) => {
     const id = generateId(20);
-    const list = getLocalStorage(TABLES.videoList, []);
     let newObj = { ...values, id };
-    setLocalStorage(TABLES.videoList, list.concat(newObj));
+    await db.collection(TABLES.videoList).doc(id).set(newObj);
+    return id;
 }
 
 api.getVideoList = async () => {
-    let list = getLocalStorage(TABLES.videoList, []);
-    return list.map(l => ({
-        ...l,
-        date: new Date(l.date),
-    }));
+    const documents = await db.collection(TABLES.videoList).get();
+    const list = documents.docs.map(d => {
+        let data = d.data();
+
+        return {
+            ...data,
+            date: data.date ? new Date(data.date.seconds * 1000) : new Date()
+        }
+    })
+    return list;
 }
 
 api.deleteVideo = async id => {
-    const list = getLocalStorage(TABLES.videoList, []);
-    setLocalStorage(TABLES.videoList, list.filter(l => l.id !== id))
+    await db.collection(TABLES.videoList).doc(id).delete();
     return true;
 }
 
